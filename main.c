@@ -12,13 +12,13 @@ int field[5][5] = {
 	{0,0,0,0,0},
 	{0,1,1,1,0},
 	{0,1,1,1,0},
-	{0,1,1,4,0},
+	{0,1,1,1,0},
 	{0,0,0,0,0}
 };
 int outputData[5][5] = {};
 int plyrX = 1, plyrY = 2;	/* location of player */
 int  blcX = 2,  blcY = 2;	/* location of block */
-//int goulX = 4, goulY = 4;	/* location of goul */
+int goulX = 3, goulY = 3;	/* location of goul */
 
 int movePlayer(char);
 int moveBlock(char);
@@ -32,6 +32,7 @@ int main(void){
 		system("clear");
 		integrateData();
 		showDisplayData();
+		if(blcX == goulX && blcY == goulY) break;
 		printf("WASD Controll (q)uit>\n");		
 		scanf("%c",&buf);
 		     if(buf == 'w') movePlayer('w');/* move top */
@@ -39,7 +40,8 @@ int main(void){
 		else if(buf == 's') movePlayer('s');/* move under */
 		else if(buf == 'd') movePlayer('d');/* move right */
 		else if(buf == 'q') break;			/* quit */
-	}	
+	}
+	if(blcX == goulX && blcY == goulY) printf("Cleard the game!\n");
 	return 0;
 }
 
@@ -48,19 +50,19 @@ int movePlayer(char dir){
 	switch(dir) {
 		case 'w':	
 			if(plyrX-1 == blcX && plyrY == blcY) moveBlock('w');
-			if(field[plyrX-1][plyrY] == EMPTY && !(plyrX-1 == blcX && plyrY == blcY)) plyrX--;
+			if(field[plyrX-1][plyrY] == EMPTY && !(plyrX-1 == blcX && plyrY == blcY) && !(plyrX-1 == goulX && plyrY == goulY)) plyrX--;
 			break;
 		case 'a':
 			if(plyrX == blcX && plyrY-1 == blcY) moveBlock('a');
-			if(field[plyrX][plyrY-1] == EMPTY && !(plyrX == blcX && plyrY-1 == blcY)) plyrY--;
+			if(field[plyrX][plyrY-1] == EMPTY && !(plyrX == blcX && plyrY-1 == blcY) && !(plyrX == goulX && plyrY-1 == goulY)) plyrY--;
 			break;
 		case 's':
 			if(plyrX+1 == blcX && plyrY == blcY) moveBlock('s');
-			if(field[plyrX+1][plyrY] == EMPTY && !(plyrX+1 == blcX && plyrY == blcY)) plyrX++;
+			if(field[plyrX+1][plyrY] == EMPTY && !(plyrX+1 == blcX && plyrY == blcY) && !(plyrX+1 == goulX && plyrY == goulY)) plyrX++;
 			break;
 		case 'd':
 			if(plyrX == blcX && plyrY+1 == blcY) moveBlock('d');
-			if(field[plyrX][plyrY+1] == EMPTY && !(plyrX == blcX && plyrY+1 == blcY)) plyrY++;
+			if(field[plyrX][plyrY+1] == EMPTY && !(plyrX == blcX && plyrY+1 == blcY) && !(plyrX == goulX && plyrY+1 == goulY)) plyrY++;
 			break;
 	}
 }
@@ -91,7 +93,7 @@ int integrateData(){
 	}
 	outputData[plyrX][plyrY] = PLYR;
 	outputData[blcX][blcY] = BLOCK;
-	//outputData[goulX][goulY] = GOUL;
+	outputData[goulX][goulY] = GOUL;
 	return 0;
 }
 /* Conv num to icon and show it */
