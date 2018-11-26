@@ -12,21 +12,25 @@ int field[5][5] = {
 	{0,0,0,0,0},
 	{0,1,1,1,0},
 	{0,1,1,1,0},
-	{0,1,3,4,0},
+	{0,1,1,4,0},
 	{0,0,0,0,0}
 };
 int outputData[5][5] = {};
-int plyrX = 1, plyrY = 2;		/* location of player */
+int plyrX = 1, plyrY = 2;	/* location of player */
+int  blcX = 2,  blcY = 2;	/* location of block */
+//int goulX = 4, goulY = 4;	/* location of goul */
 
 int movePlayer(char);
+int moveBlock(char);
 int showDisplayData(void);
-int integrateData(int, int);
+int showDisplayDataNumerical(void);
+int integrateData();
 
 int main(void){
 	char buf;
 	while(1){
 		system("clear");
-		integrateData(plyrX, plyrY);
+		integrateData();
 		showDisplayData();
 		printf("WASD Controll (q)uit>\n");		
 		scanf("%c",&buf);
@@ -43,21 +47,42 @@ int main(void){
 int movePlayer(char dir){
 	switch(dir) {
 		case 'w':	
-			if(field[plyrX-1][plyrY] == 1) plyrX--;
+			if(plyrX-1 == blcX && plyrY == blcY) moveBlock('w');
+			if(field[plyrX-1][plyrY] == EMPTY && !(plyrX-1 == blcX && plyrY == blcY)) plyrX--;
 			break;
 		case 'a':
-			if(field[plyrX][plyrY-1] == 1) plyrY--;
+			if(plyrX == blcX && plyrY-1 == blcY) moveBlock('a');
+			if(field[plyrX][plyrY-1] == EMPTY && !(plyrX == blcX && plyrY-1 == blcY)) plyrY--;
 			break;
 		case 's':
-			if(field[plyrX+1][plyrY] == 1) plyrX++;
+			if(plyrX+1 == blcX && plyrY == blcY) moveBlock('s');
+			if(field[plyrX+1][plyrY] == EMPTY && !(plyrX+1 == blcX && plyrY == blcY)) plyrX++;
 			break;
 		case 'd':
-			if(field[plyrX][plyrY+1] == 1) plyrY++;
+			if(plyrX == blcX && plyrY+1 == blcY) moveBlock('d');
+			if(field[plyrX][plyrY+1] == EMPTY && !(plyrX == blcX && plyrY+1 == blcY)) plyrY++;
 			break;
 	}
 }
-/* Make output data from field and player data */
-int integrateData(int plyrX, int plyrY){
+/* Move block and Check destination */
+int moveBlock(char dir){
+	switch(dir) {
+		case 'w':	
+			if(field[blcX-1][blcY] == EMPTY) blcX--;
+			break;
+		case 'a':
+			if(field[blcX][blcY-1] == EMPTY) blcY--;
+			break;
+		case 's':
+			if(field[blcX+1][blcY] == EMPTY) blcX++;
+			break;
+		case 'd':
+			if(field[blcX][blcY+1] == EMPTY) blcY++;
+			break;
+	}
+}
+/* Make output data from field, player and block data */
+int integrateData(){
 	/* copy field data */
 	for(int i = 0; i < 5; i++){
 		for(int j = 0; j < 5; j++){
@@ -65,6 +90,8 @@ int integrateData(int plyrX, int plyrY){
 		}
 	}
 	outputData[plyrX][plyrY] = PLYR;
+	outputData[blcX][blcY] = BLOCK;
+	//outputData[goulX][goulY] = GOUL;
 	return 0;
 }
 /* Conv num to icon and show it */
@@ -85,7 +112,7 @@ int showDisplayData(){
 int showDisplayDataNumerical(){
 	for(int i = 0; i < 5; i++){
 		for(int j = 0; j < 5; j++){
-			printf("%d", field[i][j]);
+			printf("%d", outputData[i][j]);
 		}
 		printf("\n");
 	}
