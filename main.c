@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "field.h"
 #define WALL 0
 #define EMPTY 1
 #define PLYR 2
@@ -8,17 +9,11 @@
 #define GOUL 4
 
 /* FIELD DATA */
-int field[5][5] = {
-	{0,0,0,0,0},
-	{0,1,1,1,0},
-	{0,1,1,1,0},
-	{0,1,1,1,0},
-	{0,0,0,0,0}
-};
-int outputData[5][5] = {};
+extern int field[10][10];
+int outputData[10][10];
 int plyrX = 1, plyrY = 2;	/* location of player */
 int  blcX = 2,  blcY = 2;	/* location of block */
-int goulX = 3, goulY = 3;	/* location of goul */
+int goulX = 7, goulY = 6;	/* location of goul */
 
 int movePlayer(char);
 int moveBlock(char);
@@ -32,16 +27,18 @@ int main(void){
 		system("clear");
 		integrateData();
 		showDisplayData();
-		if(blcX == goulX && blcY == goulY) break;
+		if(blcX == goulX && blcY == goulY){
+			printf("Cleard the game!\n");
+			break;
+		}
 		printf("WASD Controll (q)uit>\n");		
 		scanf("%c",&buf);
-		     if(buf == 'w') movePlayer('w');/* move top */
+			 if(buf == 'w') movePlayer('w');/* move top */
 		else if(buf == 'a') movePlayer('a');/* move left */
 		else if(buf == 's') movePlayer('s');/* move under */
 		else if(buf == 'd') movePlayer('d');/* move right */
 		else if(buf == 'q') break;			/* quit */
 	}
-	if(blcX == goulX && blcY == goulY) printf("Cleard the game!\n");
 	return 0;
 }
 
@@ -86,8 +83,8 @@ int moveBlock(char dir){
 /* Make output data from field, player and block data */
 int integrateData(){
 	/* copy field data */
-	for(int i = 0; i < 5; i++){
-		for(int j = 0; j < 5; j++){
+	for(int i = 0; i < 10; i++){
+		for(int j = 0; j < 10; j++){
 			outputData[i][j] = field[i][j];
 		}
 	}
@@ -98,23 +95,13 @@ int integrateData(){
 }
 /* Conv num to icon and show it */
 int showDisplayData(){
-	for(int i = 0; i < 5; i++){
-		for(int j = 0; j < 5; j++){
+	for(int i = 0; i < 10; i++){
+		for(int j = 0; j < 10; j++){
 			if(outputData[i][j] == WALL)  printf("■ ");	
 			if(outputData[i][j] == EMPTY) printf("□ ");
 			if(outputData[i][j] == PLYR)  printf("● ");
-			if(outputData[i][j] == BLOCK) printf("☆ ");
-			if(outputData[i][j] == GOUL)  printf("★ ");
-		}
-		printf("\n");
-	}
-	return 0;
-}
-/* debug */
-int showDisplayDataNumerical(){
-	for(int i = 0; i < 5; i++){
-		for(int j = 0; j < 5; j++){
-			printf("%d", outputData[i][j]);
+			if(outputData[i][j] == BLOCK) printf("★ ");
+			if(outputData[i][j] == GOUL)  printf("☆ ");
 		}
 		printf("\n");
 	}
