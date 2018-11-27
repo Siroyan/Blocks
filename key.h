@@ -14,5 +14,5 @@ char getch(void){
     char c;
     int status = read( 0, &c, sizeof(char) );
     return status ? c : (char)status;
-    //tcsetattr( 0, TCSADRAIN, &t_orig );
+    tcsetattr( 0, TCSADRAIN, &t_orig );
 }

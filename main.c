@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <unistd.h>
-#include <termios.h>
 #include "field.h"
 #include "key.h"
 #define WALL 0
@@ -113,4 +111,3 @@ int showDisplayData(){
 	}
 	return 0;
 }
-
