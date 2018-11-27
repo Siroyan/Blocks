@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <unistd.h>
+#include <termios.h>
 #include "field.h"
+#include "key.h"
 #define WALL 0
 #define EMPTY 1
 #define PLYR 2
@@ -20,6 +23,9 @@ int moveBlock(char);
 int showDisplayData(void);
 int showDisplayDataNumerical(void);
 int integrateData();
+void begin_getch(void);
+char getch(void);
+void end_getch(void);
 
 int main(void){
 	char buf;
@@ -32,7 +38,7 @@ int main(void){
 			break;
 		}
 		printf("WASD Controll (q)uit>\n");		
-		scanf("%c",&buf);
+		buf = getch();
 			 if(buf == 'w') movePlayer('w');/* move top */
 		else if(buf == 'a') movePlayer('a');/* move left */
 		else if(buf == 's') movePlayer('s');/* move under */
@@ -107,3 +113,4 @@ int showDisplayData(){
 	}
 	return 0;
 }
+
