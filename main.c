@@ -16,14 +16,12 @@ int plyrX = 1, plyrY = 2;	/* location of player */
 int  blcX = 2,  blcY = 2;	/* location of block */
 int goulX = 7, goulY = 6;	/* location of goul */
 
-int movePlayer(char);
-int moveBlock(char);
-int showDisplayData(void);
-int showDisplayDataNumerical(void);
-int integrateData();
-void begin_getch(void);
-char getch(void);
-void end_getch(void);
+int checkDest(int,int,char)
+void movePlayer(char);
+void moveBlock(char);
+void showDisplayData(void);
+void integrateData(void);
+extern char getch(void);
 
 int main(void){
 	char buf;
@@ -47,7 +45,7 @@ int main(void){
 }
 
 /* Move player and Check destination */
-int movePlayer(char dir){
+void movePlayer(char dir){
 	switch(dir) {
 		case 'w':	
 			if(plyrX-1 == blcX && plyrY == blcY) moveBlock('w');
@@ -68,7 +66,7 @@ int movePlayer(char dir){
 	}
 }
 /* Move block and Check destination */
-int moveBlock(char dir){
+void moveBlock(char dir){
 	switch(dir) {
 		case 'w':	
 			if(field[blcX-1][blcY] == EMPTY) blcX--;
@@ -84,8 +82,14 @@ int moveBlock(char dir){
 			break;
 	}
 }
+
+/* Check destination empty?*/
+int checkDest(int x, int y, char dir){
+	return 0;
+}
+
 /* Make output data from field, player and block data */
-int integrateData(){
+void integrateData(){
 	/* copy field data */
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j < 10; j++){
@@ -95,10 +99,9 @@ int integrateData(){
 	outputData[plyrX][plyrY] = PLYR;
 	outputData[blcX][blcY] = BLOCK;
 	outputData[goulX][goulY] = GOUL;
-	return 0;
 }
 /* Conv num to icon and show it */
-int showDisplayData(){
+void showDisplayData(){
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j < 10; j++){
 			if(outputData[i][j] == WALL)  printf("■ ");	
@@ -109,5 +112,4 @@ int showDisplayData(){
 		}
 		printf("\n");
 	}
-	return 0;
 }
