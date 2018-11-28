@@ -13,10 +13,10 @@
 extern int field[10][10];
 int outputData[10][10];
 int plyrX = 1, plyrY = 2;	/* location of player */
-int  blcX = 2,  blcY = 2;	/* location of block */
-int goulX = 7, goulY = 6;	/* location of goul */
+int  blcX = 7,  blcY = 7;	/* location of block */
+int goulX = 8, goulY = 1;	/* location of goul */
 
-int checkDest(int,int,char)
+int checkDest(int,int,char);
 void movePlayer(char);
 void moveBlock(char);
 void showDisplayData(void);
