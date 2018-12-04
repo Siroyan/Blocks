@@ -24,7 +24,6 @@ void integrateData(void);
 extern char getch(void);
 
 int main(void){
-	char buf;
 	while(1){
 		system("clear");
 		integrateData();
@@ -33,13 +32,7 @@ int main(void){
 			printf("Cleard the game!\n");
 			break;
 		}
-		printf("WASD Controll (q)uit>\n");		
-		buf = getch();
-			 if(buf == 'w') move('w');	/* move top */
-		else if(buf == 'a') move('a');	/* move left */
-		else if(buf == 's') move('s');	/* move under */
-		else if(buf == 'd') move('d');	/* move right */
-		else if(buf == 'q') break;		/* quit */
+		move(getch());
 	}
 	return 0;
 }
@@ -87,7 +80,7 @@ void showDisplayData(){
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j < 10; j++){
 			if(outputData[i][j] == WALL) printf("■ ");	
-			if(outputData[i][j] == EMPT) printf("□ ");
+			if(outputData[i][j] == EMPT) printf("  ");
 			if(outputData[i][j] == PLYR) printf("● ");
 			if(outputData[i][j] == BAGG) printf("★ ");
 			if(outputData[i][j] == GOUL) printf("☆ ");
